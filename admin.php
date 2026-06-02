@@ -43,27 +43,28 @@ $total_bookings = mysqli_num_rows($result);
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Панель администратора - Конференции.РФ</title>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
-		<div>
-			<div>
-				<a href="index.php">Конференции.РФ</a>
-				<div>
-					<a href="admin.php">Панель админа</a>
-					<a href="?index=1" name="index">Выход</a>
+		<div class="header">
+			<div class="nav container">
+				<a href="index.php" class="logo">Конференции.РФ</a>
+				<div class="nav-btn">
+					<a href="admin.php" class="btn btn-primary">Панель админа</a>
+					<a href="?index=1" name="index" class="btn btn-outline">Выход</a>
 				</div>
         	</div>
 		</div>
-		<div>
-        <div>
+		<div class="container">
+        <div class="admin-header">
             <h1>Управление заявками</h1>
             <?php if (isset($_GET['updated'])): ?>
-                <div id="notification">Статус заявки обновлен!</div>
+                <div class="alert alert-success" id="notification">Статус заявки обновлен!</div>
             <?php endif; ?>
         </div>
-        <div>
-            <form method="GET">
-                <div>
+        <div class="admin-filters">
+            <form method="GET" class="filter-form">
+                <div class="form-group-inline">
                     <label for="status">Фильтр по статусу:</label>
                     <select name="status" id="status">
                         <option value="">Все заявки</option>
@@ -72,7 +73,7 @@ $total_bookings = mysqli_num_rows($result);
                         <option value="Мероприятие завершено" <?= $filter_status === 'Мероприятие завершено' ? 'selected' : '' ?>>Мероприятие завершено</option>
                     </select>
                 </div>
-                <div>
+                <div class="form-group-inline">
                     <label for="sort">Сортировка по:</label>
                     <select name="sort" id="sort">
                         <option value="date" <?= $sort_by === 'date' ? 'selected' : '' ?>>Дате</option>
@@ -80,58 +81,58 @@ $total_bookings = mysqli_num_rows($result);
                         <option value="room_type" <?= $sort_by === 'room_type' ? 'selected' : '' ?>>Типу помещения</option>
                     </select>
                 </div>
-                <div>
+                <div class="form-group-inline">
                     <label for="order">Порядок:</label>
                     <select name="order" id="order">
                         <option value="DESC" <?= $sort_order === 'DESC' ? 'selected' : '' ?>>По убыванию</option>
                         <option value="ASC" <?= $sort_order === 'ASC' ? 'selected' : '' ?>>По возрастанию</option>
                     </select>
                 </div>
-                <button type="submit">Применить</button>
-                <a href="admin.php">Сбросить</a>
+                <button type="submit" class="btn btn-primary">Применить</button>
+                <a href="admin.php" class="btn btn-outline">Сбросить</a>
             </form>
         </div>
 
-        <div >
-            <div>Найдено заявок: <?= $total_bookings ?></div>
+        <div class="bookings-list">
+            <div class="stats">Найдено заявок: <?= $total_bookings ?></div>
             
             <?php if ($total_bookings === 0): ?>
-                <div>Заявок не найдено.</div>
+                <div class="empty-state">Заявок не найдено.</div>
             <?php else: ?>
                 <?php while ($booking = mysqli_fetch_assoc($result)): ?>
-                    <div>
-                        <div>
+                    <div class="booking-card admin-card">
+                        <div class="card-header">
                             <span class="status status-<?= str_replace(' ', '-', strtolower($booking['status'])) ?>">
                                 <?= htmlspecialchars($booking['status']) ?>
                             </span>
-                            <span >Заявка #<?= $booking['id'] ?></span>
+                            <span class="booking-id">Заявка #<?= $booking['id'] ?></span>
                         </div>
-                        <div>
-                            <div >
-                                <div >
+                        <div class="card-body">
+                            <div class="booking-info">
+                                <div class="info-row">
                                     <strong>Пользователь:</strong> <?= htmlspecialchars($booking['fullname']) ?> (@<?= htmlspecialchars($booking['login']) ?>)
                                 </div>
-                                <div>
+                                <div class="info-row">
                                     <strong>Email:</strong> <?= htmlspecialchars($booking['email']) ?>
                                 </div>
-                                <div >
+                                <div class="info-row">
                                     <strong>Помещение:</strong> <?= htmlspecialchars($booking['room_type']) ?>
                                 </div>
-                                <div >
+                                <div class="info-row">
                                     <strong>Дата:</strong> <?= date('d.m.Y', strtotime($booking['date'])) ?>
                                 </div>
-                                <div>
+                                <div class="info-row">
                                     <strong>Оплата:</strong> <?= htmlspecialchars($booking['payment']) ?>
                                 </div>
                                 <?php if ($booking['feedback']): ?>
-                                    <div >
+                                    <div class="info-row">
                                         <strong>Отзыв:</strong> <?= nl2br(htmlspecialchars($booking['feedback'])) ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
-                            <form method="POST" >
+                            <form method="POST" class="status-form">
                                 <input type="hidden" name="booking_id" value="<?= $booking['id'] ?>">
-                                <div >
+                                <div class="form-group-inline">
                                     <label for="status_<?= $booking['id'] ?>">Изменить статус:</label>
                                     <select name="status" id="status_<?= $booking['id'] ?>">
                                         <option value="Новая" <?= $booking['status'] === 'Новая' ? 'selected' : '' ?>>Новая</option>
@@ -139,7 +140,7 @@ $total_bookings = mysqli_num_rows($result);
                                         <option value="Мероприятие завершено" <?= $booking['status'] === 'Мероприятие завершено' ? 'selected' : '' ?>>Мероприятие завершено</option>
                                     </select>
                                 </div>
-                                <button type="submit" >Обновить</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Обновить</button>
                             </form>
                         </div>
                     </div>
