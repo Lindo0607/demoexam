@@ -28,33 +28,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Вход - Конференции.РФ</title>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
-		<div>
-			<div>
-				<a href="index.php" >Конференции.РФ</a>
-				<div>
-					<a href="login.php" >Вход</a>
-					<a href="register.php">Регистрация</a>
+		<div class="header">
+			<div class="nav container">
+				<a href="index.php" class="logo">Конференции.РФ</a>
+				<div class="nav-btn">
+					<a href="login.php" class="btn btn-primary">Вход</a>
+					<a href="register.php" class="btn btn-outline">Регистрация</a>
 				</div>
 			</div>
 		</div>
-		<div >
-        <form method="POST" >
+		<div class="container form-container">
+        <form method="POST" class="auth-form">
             <h2>Авторизация</h2>
             <?php if ($error): ?>
-                <div ><?= htmlspecialchars($error) ?></div>
+                <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
-            <div >
+            <div class="form-group">
                 <label for="login">Логин</label>
                 <input type="text" id="login" name="login" required>
             </div>
-            <div >
+            <div class="form-group">
                 <label for="password">Пароль</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" >Войти</button>
-            <p >Еще не зарегистрированы? <a href="register.php">Регистрация</a></p>
+            <button type="submit" class="btn btn-primary btn-block">Войти</button>
+            <p class="form-footer">Еще не зарегистрированы? <a href="register.php">Регистрация</a></p>
         </form>
     </div>
 	</body>

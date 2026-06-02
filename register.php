@@ -56,62 +56,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Регистрация - Конференции.РФ</title>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
-		<div>
-			<div >
-				<a href="index.php" >Конференции.РФ</a>
-				<div >
-					<a href="login.php">Вход</a>
-					<a href="register.php">Регистрация</a>
+		<div class="header">
+			<div class="nav container">
+				<a href="index.php" class="logo">Конференции.РФ</a>
+				<div class="nav-btn">
+					<a href="login.php" class="btn btn-outline">Вход</a>
+					<a href="register.php" class="btn btn-primary">Регистрация</a>
 				</div>
 			</div>
 		</div>
-		<div >
-        <form method="POST" >
+		<div class="container form-container">
+        <form method="POST" class="auth-form">
             <h2>Регистрация</h2>
             <?php if (isset($errors['general'])): ?>
-                <div><?= $errors['general'] ?></div>
+                <div class="alert alert-error"><?= $errors['general'] ?></div>
             <?php endif; ?>
-            <div >
+            <div class="form-group">
                 <label for="login">Логин *</label>
                 <input type="text" id="login" name="login" value="<?= htmlspecialchars($form_data['login'] ?? '') ?>" required>
                 <?php if (isset($errors['login'])): ?>
-                    <span ><?= $errors['login'] ?></span>
+                    <span class="error-msg"><?= $errors['login'] ?></span>
                 <?php endif; ?>
                 <small>Латинские буквы и цифры, мин. 6 символов</small>
             </div>
-            <div >
+            <div class="form-group">
                 <label for="password">Пароль *</label>
                 <input type="password" id="password" name="password" required>
                 <?php if (isset($errors['password'])): ?>
-                    <span ><?= $errors['password'] ?></span>
+                    <span class="error-msg"><?= $errors['password'] ?></span>
                 <?php endif; ?>
                 <small>Минимум 8 символов</small>
             </div>
-            <div >
+            <div class="form-group">
                 <label for="fullname">ФИО *</label>
                 <input type="text" id="fullname" name="fullname" value="<?= htmlspecialchars($form_data['fullname'] ?? '') ?>" required>
                 <?php if (isset($errors['fullname'])): ?>
-                    <span ><?= $errors['fullname'] ?></span>
+                    <span class="error-msg"><?= $errors['fullname'] ?></span>
                 <?php endif; ?>
             </div>
-            <div >
+            <div class="form-group">
                 <label for="phone">Телефон *</label>
                 <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($form_data['phone'] ?? '') ?>" placeholder="+7 (999) 123-45-67" required>
                 <?php if (isset($errors['phone'])): ?>
-                    <span ><?= $errors['phone'] ?></span>
+                    <span class="error-msg"><?= $errors['phone'] ?></span>
                 <?php endif; ?>
             </div>
-            <div >
+            <div class="form-group">
                 <label for="email">Email *</label>
                 <input type="email" id="email" name="email" value="<?= htmlspecialchars($form_data['email'] ?? '') ?>" required>
                 <?php if (isset($errors['email'])): ?>
-                    <span ><?= $errors['email'] ?></span>
+                    <span class="error-msg"><?= $errors['email'] ?></span>
                 <?php endif; ?>
             </div>
-            <button type="submit" >Зарегистрироваться</button>
-            <p >Уже есть аккаунт? <a href="login.php">Войти</a></p>
+            <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+            <p class="form-footer">Уже есть аккаунт? <a href="login.php">Войти</a></p>
         </form>
     </div>
 	</body>
