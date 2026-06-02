@@ -28,57 +28,59 @@ $result = mysqli_query($con, $query);
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Личный кабинет - Конференции.РФ</title>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
-		<div >
-			<div >
-				<a href="index.php">Конференции.РФ</a>
-				<div >
-					<a href="history.php" >Личный кабинет</a>
-					<a href="create.php" >Забранировать</a>
-					<a href="?index=1" name="index" >Выход</a>
+		<div class="header">
+			<div class="nav container">
+				<a href="index.php" class="logo">Конференции.РФ</a>
+				<div class="nav-btn">
+					<a href="history.php" class="btn btn-primary">Личный кабинет</a>
+					<a href="create.php" class="btn btn-outline">Забранировать</a>
+					<a href="?index=1" name="index" class="btn btn-outline">Выход</a>
 				</div>
 			</div>
 		</div>
-		<div >
+		<div class="container">
         <h1>Мои заявки</h1>
         <?php if (isset($_GET['created'])): ?>
-            <div >Заявка успешно создана!</div>
+            <div class="alert alert-success">Заявка успешно создана!</div>
         <?php endif; ?>
         <?php if (isset($_GET['updated'])): ?>
-            <div >Отзыв сохранен!</div>
+            <div class="alert alert-success">Отзыв сохранен!</div>
         <?php endif; ?>
-        <div >
+
+        <div class="bookings-grid">
             <?php if (mysqli_num_rows($result) === 0): ?>
-                <div >
+                <div class="empty-state">
                     <p>У вас пока нет заявок на бронирование.</p>
-                    <a href="create_booking.php">Создать заявку</a>
+                    <a href="create_booking.php" class="btn btn-primary">Создать заявку</a>
                 </div>
             <?php else: ?>
                 <?php while ($booking = mysqli_fetch_assoc($result)): ?>
-                    <div >
-                        <div >
+                    <div class="booking-card">
+                        <div class="card-header">
                             <span class="status status-<?= str_replace(' ', '-', strtolower($booking['status'])) ?>">
                                 <?= htmlspecialchars($booking['status']) ?>
                             </span>
-                            <span>#<?= $booking['id'] ?></span>
+                            <span class="booking-id">#<?= $booking['id'] ?></span>
                         </div>
-                        <div >
+                        <div class="card-body">
                             <h3><?= htmlspecialchars($booking['room_type']) ?></h3>
                             <p><strong>Дата:</strong> <?= date('d.m.Y', strtotime($booking['date'])) ?></p>
                             <p><strong>Оплата:</strong> <?= htmlspecialchars($booking['payment']) ?></p>
                             
                             <?php if ($booking['status'] === 'Мероприятие завершено'): ?>
-                                <form method="POST" >
+                                <form method="POST" class="feedback-form">
                                     <input type="hidden" name="booking_id" value="<?= $booking['id'] ?>">
-                                    <div>
+                                    <div class="form-group">
                                         <label for="feedback_<?= $booking['id'] ?>">Ваш отзыв:</label>
                                         <textarea name="feedback" id="feedback_<?= $booking['id'] ?>" rows="3"><?= htmlspecialchars($booking['feedback'] ?? '') ?></textarea>
                                     </div>
-                                    <button type="submit" >Сохранить отзыв</button>
+                                    <button type="submit" class="btn btn-outline btn-sm">Сохранить отзыв</button>
                                 </form>
                             <?php elseif ($booking['feedback']): ?>
-                                <div >
+                                <div class="feedback-show">
                                     <strong>Отзыв:</strong>
                                     <p><?= nl2br(htmlspecialchars($booking['feedback'])) ?></p>
                                 </div>

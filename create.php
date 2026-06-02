@@ -32,25 +32,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Новая заявка - Конференции.РФ</title>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
-		<div >
-			<div>
-				<a href="index.php">Конференции.РФ</a>
-				<div>
-					<a href="profile.php" >Личный кабинет</a>
-					<a href="create.php" >Забранировать</a>
-					<a href="?index=1" name="index" >Выход</a>
+		<div class="header">
+			<div class="nav container">
+				<a href="index.php" class="logo">Конференции.РФ</a>
+				<div class="nav-btn ">
+					<a href="profile.php" class="btn btn-outline">Личный кабинет</a>
+					<a href="create.php" class="btn btn-primary">Забранировать</a>
+					<a href="?index=1" name="index" class="btn btn-outline">Выход</a>
 				</div>
 			</div>
 		</div>
-		<div >
-        <form method="POST" >
+		<div class="container form-container">
+        <form method="POST" class="booking-form">
             <h2>Бронирование помещения</h2>
             <?php if (isset($error)): ?>
-                <div><?= $error ?></div>
+                <div class="alert alert-error"><?= $error ?></div>
             <?php endif; ?>
-            <div>
+            <div class="form-group">
                 <label for="room_type">Тип помещения</label>
                 <select id="room_type" name="room_type" required>
                     <option value="Аудитория">Аудитория</option>
@@ -58,11 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Кинозал">Кинозал</option>
                 </select>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="date">Дата начала конференции</label>
-                <input type="date" id="date" name="date" required>
+                <input type="datetime-local" id="date" name="date" required>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="payment">Способ оплаты</label>
                 <select id="payment" name="payment" required>
                     <option value="Наличными в кассу">Наличными в кассу</option>
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Онлайн банковсткой карты">Онлайн банковсткой карты</option>
                 </select>
             </div>
-            <button type="submit">Отправить заявку</button>
+            <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
         </form>
     </div>
 	</body>
